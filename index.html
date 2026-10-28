@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f5f8fb" />
+  <meta name="description" content="从发现、理解到动手体验，认识身边的非遗手艺。" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="匠人说" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <title>匠人说 · 非遗生活</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark">匠</div>
+      <div class="brand-copy"><strong>匠人说</strong><span>让非遗走进日常</span></div>
+      <button class="icon-button" id="nativeShareBtn" aria-label="分享应用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="5.5" r="2.4"/><circle cx="18" cy="18.5" r="2.4"/><path d="M8.3 10.8 15.7 6.7M8.3 13.2 15.7 17.3"/></svg></button>
+      <button class="icon-button install-button" id="installBtn" aria-label="安装应用" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+    </header>
+
+    <main id="appMain">
+      <section class="screen active" id="homeScreen">
+        <div class="home-hero">
+          <span class="eyebrow">DISCOVER · HERITAGE</span>
+          <div class="hero-title-row"><h1 class="hero-title">匠人说</h1><span class="seal-stamp">非遗</span></div>
+          <p class="hero-sub">让非遗走进日常 · 从一眼好奇，到亲手体验</p>
+          <button class="camera-hero" id="cameraBtn">
+            <span class="camera-orbit"><svg class="camera-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5a2 2 0 0 1 2-2h1.4l1.1-2h7l1.1 2H18a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13.2" r="3"/></svg></span>
+            <span class="camera-title">拍照识别非遗</span><span class="camera-subtitle">对准一件好奇的物件，认识它的来处</span>
+            <span class="camera-action">开始识别 <b>↗</b></span>
+            <span class="sun-doodle"></span>
+          </button>
+          <input type="file" id="photoInput" accept="image/*" capture="environment" hidden />
+        </div>
+        <div class="section-heading"><div><span class="eyebrow">START WITH A CRAFT</span><h2>从一门手艺开始</h2></div><button class="text-button" data-go="learn">全部项目 ↗</button></div>
+        <div class="craft-row">
+          <button class="craft-card" data-craft="扎染"><span class="craft-art" style="background:#e6eef3 url('https://aka.doubaocdn.com/s/VsCbtVoInK') center/cover no-repeat"></span><span class="craft-label">扎染</span><small>蓝白之间的惊喜</small></button>
+          <button class="craft-card" data-craft="漆扇"><span class="craft-art" style="background:#f1e2cf url('https://aka.doubaocdn.com/s/RDdxZYFrQ2') center/cover no-repeat"></span><span class="craft-label">福州漆扇</span><small>一扇一世界</small></button>
+          <button class="craft-card" data-craft="竹编"><span class="craft-art" style="background:#e6ecd8 url('https://aka.doubaocdn.com/s/EXSelYQjD9') center/cover no-repeat"></span><span class="craft-label">竹编</span><small>经纬里的巧思</small></button>
+        </div>
+        <div class="home-note"><span class="note-icon">✳</span><div><strong>手艺不远，就在身边</strong><p>看见、问懂、动手做，再把每一步收进手账。</p></div><span>→</span></div>
+      </section>
+
+      <section class="screen" id="identifyScreen">
+        <div class="page-heading"><span class="eyebrow">LOOK CLOSER</span><h1>让好奇，<em>有答案。</em></h1><p>拍一拍身边的非遗作品，不必先知道它的名字。</p></div>
+        <button class="upload-panel" id="uploadBtn"><span class="upload-symbol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5a2 2 0 0 1 2-2h1.4l1.1-2h7l1.1 2H18a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13.2" r="3"/></svg></span><strong>拍照或从相册选择</strong><small>清晰呈现作品主体，识别更准确</small><span class="upload-rule"></span><span class="upload-tip">支持 JPG、PNG 图片</span></button>
+        <div class="section-heading compact"><div><span class="eyebrow">TRY A SAMPLE</span><h2>先看看怎么识别</h2></div></div>
+        <div class="sample-list">
+          <button class="sample-item" data-sample="漆扇"><span class="sample-thumb" style="background:#f1e2cf url('https://aka.doubaocdn.com/s/RDdxZYFrQ2') center/cover no-repeat"></span><span><strong>福州漆扇</strong><small>漆艺 · 福建福州</small></span><b>↗</b></button>
+          <button class="sample-item" data-sample="扎染"><span class="sample-thumb" style="background:#e6eef3 url('https://aka.doubaocdn.com/s/VsCbtVoInK') center/cover no-repeat"></span><span><strong>白族扎染</strong><small>染织技艺 · 云南大理</small></span><b>↗</b></button>
+          <button class="sample-item" data-sample="竹编"><span class="sample-thumb" style="background:#e6ecd8 url('https://aka.doubaocdn.com/s/EXSelYQjD9') center/cover no-repeat"></span><span><strong>东阳竹编</strong><small>传统技艺 · 浙江东阳</small></span><b>↗</b></button>
+        </div>
+        <div class="privacy-note">⌑　照片仅用于本次识别，也可在手账中回看</div>
+      </section>
+
+      <section class="screen" id="chatScreen">
+        <div class="chat-head"><div class="artisan-avatar">匠</div><div><strong>传承人在线</strong><small><i class="online-dot"></i> 用日常的话，聊一门老手艺</small></div><button class="icon-button" id="newChatBtn" aria-label="新对话"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
+        <div class="chat-context"><span>正在聊</span><strong id="chatTopic">非遗 · 随便问</strong><button id="topicBtn">换个话题</button></div>
+        <div class="chat-scroll" id="chatMessages">
+          <div class="day-divider">今天 · 与手艺人聊聊</div>
+          <div class="message assistant"><span class="message-avatar">匠</span><div class="bubble-wrap"><small>传承人</small><div class="bubble">你好呀，我是匠人说里的非遗传承人。你最近看到什么手艺，或者心里有什么好奇？都可以用自己的话问我。</div></div></div>
+          <div class="suggestions"><span>你可以这样问</span><button class="suggestion">漆扇上的花纹是怎么做出来的？</button><button class="suggestion">扎染为什么会有深浅不一的蓝？</button></div>
+        </div>
+        <div class="chat-composer"><textarea id="chatInput" rows="1" maxlength="100" placeholder="说说你想知道的事…"></textarea><button id="sendBtn" aria-label="发送"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button><small><span id="charCount">0</span>/100</small></div>
+        <div class="chat-footnote">回答由非遗知识库模拟生成 · 参考资料可展开查看</div>
+      </section>
+
+      <section class="screen" id="learnScreen">
+        <div class="page-heading learn-heading"><span class="eyebrow">MAKE IT YOURS</span><h1>跟着手艺人，<em>做一件。</em></h1><p>每一步都有提醒，慢慢来就很好。</p></div>
+        <div id="courseList">
+          <div class="course-feature"><div class="course-art" style="background-image:url('https://aka.doubaocdn.com/s/VsCbtVoInK')"><small>蓝染的呼吸</small></div><div class="course-copy"><span class="pill blue-pill">新手友好 · 8 步</span><h2>做一块自己的<br />蓝白扎染方巾</h2><p>从折叠、捆扎到染色，跟着步骤体验蓝白相间的惊喜。</p><div class="course-meta"><span>约 25 分钟</span><span>● ● ● ● ○</span></div><button class="primary-button start-course" data-course="扎染方巾">开始跟学 <b>→</b></button></div></div>
+          <div class="section-heading compact"><div><span class="eyebrow">MORE TO MAKE</span><h2>还有这些手艺</h2></div></div>
+          <button class="course-row" data-course="漆扇体验"><span class="course-mini" style="background:#f1e2cf url('https://aka.doubaocdn.com/s/RDdxZYFrQ2') center/cover no-repeat"></span><span><strong>画一把流光漆扇</strong><small>漆艺 · 6 步 · 约 20 分钟</small></span><b>↗</b></button>
+          <button class="course-row" data-course="竹编杯垫"><span class="course-mini" style="background:#e6ecd8 url('https://aka.doubaocdn.com/s/EXSelYQjD9') center/cover no-repeat"></span><span><strong>编一只竹编杯垫</strong><small>竹编 · 10 步 · 约 35 分钟</small></span><b>↗</b></button>
+        </div>
+        <div class="lesson-view hidden" id="lessonView">
+          <button class="back-link" id="backCourses">← 返回项目</button>
+          <div class="lesson-title"><div class="lesson-meta"><span class="pill blue-pill" id="lessonCraft">扎染体验</span><span class="step-count" id="stepCount">第 1 步 · 共 6 步</span></div><h2 id="lessonName">扎好第一道纹路</h2><p id="lessonDesc">把布料沿对角线轻轻折叠，边缘尽量对齐。</p></div>
+          <div class="step-track" id="stepTrack"></div>
+          <div class="lesson-visual" id="lessonVisual"><span>STEP <b id="stepNumber">01</b></span></div>
+          <div class="tip-card"><span>✦</span><div><strong>这一步容易忽略</strong><p id="lessonTip">折叠时不要拉得太紧，留一点空间让染料慢慢渗开。</p></div></div>
+          <div class="feedback hidden" id="lessonFeedback"></div>
+          <button class="camera-step" id="checkStep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5a2 2 0 0 1 2-2h1.4l1.1-2h7l1.1 2H18a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13.2" r="3"/></svg><strong>拍好啦，让匠人看看</strong><small>上传作品照片，获得下一步建议</small></button>
+          <div class="lesson-actions"><button id="demoBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7Z"/></svg>　看慢动作演示</button><button id="skipStep">先看下一步　<b>→</b></button></div>
+        </div>
+        <input type="file" id="stepPhotoInput" accept="image/*" capture="environment" hidden />
+      </section>
+
+      <section class="screen" id="journalScreen">
+        <div class="journal-title"><span class="eyebrow">MY HERITAGE JOURNEY</span><h1>我的非遗手账</h1><p>每一次好奇，都是和手艺的一次相遇。</p></div>
+        <div class="stats-card"><div><strong id="statKinds">3</strong><span>解锁门类</span></div><i></i><div><strong id="statWorks">1</strong><span>完成手作</span></div><i></i><div><strong id="statQuestions">2</strong><span>问过问题</span></div></div>
+        <div class="badge-section"><div class="badge-heading"><div><span class="eyebrow">LITTLE MILESTONES</span><h2>已点亮的徽章</h2></div><button class="text-button" id="shareBtn">分享手账 ↗</button></div><div class="badge-row"><div class="badge-item"><span class="badge medal">✦</span><small>初见非遗</small></div><div class="badge-item"><span class="badge blue">❋</span><small>蓝染新手</small></div><div class="badge-item locked"><span class="badge">◇</span><small>漆艺探索者</small></div><div class="badge-item locked"><span class="badge">✧</span><small>竹编体验家</small></div></div></div>
+        <div class="journal-feed-head"><div><span class="eyebrow">YOUR FOOTPRINTS</span><h2>一路走来的手艺</h2></div></div>
+        <div class="filter-tabs" id="journalFilters"><button class="selected" data-filter="全部">全部</button><button data-filter="看了">看过</button><button data-filter="问了">问过</button><button data-filter="做了">做过</button></div>
+        <div class="timeline" id="timeline"></div>
+        <button class="explore-cta" data-go="identify"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span><strong>去解锁下一件手艺</strong><small>把下一个好奇，变成新的足迹</small></span><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></b></button>
+      </section>
+    </main>
+
+    <nav class="tabbar" id="tabbar">
+      <button class="tab active" data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10.5 12 3.2l8.5 7.3"/><path d="M5.5 9.4V20h13V9.4"/><path d="M10 20v-5h4v5"/></svg><small>首页</small></button>
+      <button class="tab" data-tab="identify"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5a2 2 0 0 1 2-2h1.4l1.1-2h7l1.1 2H18a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13.2" r="3"/></svg><small>识别</small></button>
+      <button class="tab" data-tab="learn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3.5 20.5 10"/><path d="M13 5 19 11l-6 8a4 4 0 1 1-6-6Z"/><path d="M5.5 15.5 9.5 11.5"/></svg><small>跟学</small></button>
+      <button class="tab" data-tab="journal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c1.6-3.6 4.4-5.4 7.5-5.4s5.9 1.8 7.5 5.4"/></svg><small>我的</small></button>
+    </nav>
+    <div class="toast" id="toast"></div>
+    <div class="modal-backdrop hidden" id="modal"><div class="modal-card" id="modalContent"></div></div>
+  </div>
+  <script src="./app.js"></script>
+</body>
+</html>

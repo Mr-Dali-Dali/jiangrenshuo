@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="116" fill="#244d61"/>
+  <circle cx="256" cy="256" r="186" fill="none" stroke="#d6e8e5" stroke-width="5"/>
+  <circle cx="256" cy="256" r="162" fill="none" stroke="#d6e8e5" stroke-width="2" opacity=".65"/>
+  <path d="M256 74v40M256 398v40M74 256h40M398 256h40M127 127l29 29M356 356l29 29M385 127l-29 29M156 356l-29 29" stroke="#d6e8e5" stroke-width="5" stroke-linecap="round"/>
+  <text x="256" y="300" text-anchor="middle" font-family="serif" font-size="220" font-weight="700" fill="#fff9e9">匠</text>
+</svg>
