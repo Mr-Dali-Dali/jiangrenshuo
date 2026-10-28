@@ -4,7 +4,10 @@ const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const crafts = {
   漆扇: { title: '福州漆扇', category: '漆艺 · 福建福州', description: '把天然漆滴入水中，轻轻一转，水面上的纹样就落在扇面上。每一把都独一无二。', maker: '代表传承人 · 福州漆艺匠人', art: 'fan-art', symbol: '扇', photo: 'https://aka.doubaocdn.com/s/RDdxZYFrQ2', encyclopedia: '漆扇以水为画布，利用漆与水不相溶的特性形成自然纹样。匠人将扇面轻轻掠过水面，图案便附着其上。' },
   扎染: { title: '白族扎染', category: '染织技艺 · 云南大理', description: '先用针线或绳子把布料扎结，再放进蓝靛染缸。染料染不到的地方，就留下了白色花纹。', maker: '代表传承人 · 大理周城扎染匠人', art: 'tie-dye', symbol: '✳', photo: 'https://aka.doubaocdn.com/s/VsCbtVoInK', encyclopedia: '扎染古称绞缬，是先扎结织物再浸染的染色技艺。扎紧处染料进不去，拆线后便呈现蓝白相间的图案。' },
-  竹编: { title: '东阳竹编', category: '传统技艺 · 浙江东阳', description: '竹篾在手艺人的指尖穿梭，一经一纬，慢慢编出轻巧又结实的生活器物。', maker: '代表传承人 · 东阳竹编匠人', art: 'weave-art', symbol: '▧', photo: 'https://aka.doubaocdn.com/s/EXSelYQjD9', encyclopedia: '竹编以竹子为原料，经刮青、分篾、起底、编织等工序制成。细篾交错形成图案，也让器物保持轻巧结实。' }
+  竹编: { title: '东阳竹编', category: '传统技艺 · 浙江东阳', description: '竹篾在手艺人的指尖穿梭，一经一纬，慢慢编出轻巧又结实的生活器物。', maker: '代表传承人 · 东阳竹编匠人', art: 'weave-art', symbol: '▧', photo: 'https://aka.doubaocdn.com/s/EXSelYQjD9', encyclopedia: '竹编以竹子为原料，经刮青、分篾、起底、编织等工序制成。细篾交错形成图案，也让器物保持轻巧结实。' },
+  侗族大歌: { title: '侗族大歌', category: '传统音乐 · 贵州黔东南', description: '不看谱、不伴奏，侗寨鼓楼里一群人对唱，多声部和声像山野的回音一样彼此应和。', maker: '代表传承人 · 胡官美（贵州榕江）', art: 'sound-art', symbol: '♪', photo: '', encyclopedia: '侗族大歌是无伴奏、无指挥的多声部民间合唱，模拟鸟鸣虫唱、山林流水，被称为“天籁之音”，多在侗寨鼓楼以歌队对唱形式演唱。' },
+  古琴艺术: { title: '古琴艺术', category: '传统音乐 · 全国（多琴派）', description: '七根弦，一按一挑，弹出中国人三千年的心事。琴声沉静悠远，讲究余韵。', maker: '代表传承人 · 虞山、广陵等琴派', art: 'sound-art', symbol: '♪', photo: '', encyclopedia: '古琴是中国最古老的弹拨乐器之一，七弦十三徽，音色沉静悠远，与棋、书、画并称“文人四艺”，代表曲目有《广陵散》《流水》《梅花三弄》。' },
+  苏州评弹: { title: '苏州评弹', category: '曲艺 · 江苏苏州', description: '一张桌、一把三弦琵琶，吴侬软语把江南故事说唱得有滋有味。', maker: '代表传承人 · 苏州评弹艺术家', art: 'sound-art', symbol: '♪', photo: '', encyclopedia: '苏州评弹是苏州评话与苏州弹词的合称，用苏州方言说唱。评话只说不唱，弹词说噱弹唱、三弦琵琶伴奏，一部《珍珠塔》《三笑》可连说数月。' }
 };
 const lessonSteps = [
   { title: '扎好第一道纹路', description: '把布料沿对角线轻轻折叠，边缘尽量对齐。', tip: '折叠时不要拉得太紧，留一点空间让染料慢慢渗开。' },
@@ -61,6 +64,11 @@ function showModal(markup) {
 }
 function closeModal() {
   clearTimeout(recognitionTimer);
+  if (recorder && recorder.state !== 'inactive') {
+    try { recorderStream?.getTracks().forEach(track => track.stop()); } catch {}
+    recorder = null;
+  }
+  if (recordingClock) { clearInterval(recordingClock); recordingClock = null; recordingSeconds = 0; }
   $('#modal').classList.add('hidden');
 }
 function closeModalOnBackdrop(event) {
@@ -72,17 +80,17 @@ function addEntry(kind, craft, title, detail) {
   entries.unshift({ id: `e${Date.now()}`, kind, craft, title: `${kind} · ${title || item.title}`, detail: detail || item.category, art: item.art, symbol: item.symbol, date: '刚刚' });
   persist();
 }
-function resultModal(craft, hasPhoto = false) {
+function resultModal(craft, source = 'sample') {
   const item = crafts[craft] || crafts.漆扇;
   currentResultCraft = crafts[craft] ? craft : '漆扇';
-  const photoText = hasPhoto ? '照片已上传 · mock 识别' : '识别示例 · mock 结果';
+  const photoText = source === 'audio' ? '录音已上传 · mock 识别' : source === 'photo' ? '照片已上传 · mock 识别' : '识别示例 · mock 结果';
   showModal(`<div class="modal-top"><span>${photoText}</span><button class="modal-close" aria-label="关闭">×</button></div><div class="result-art ${item.art}" style="background-image:url('${item.photo}')">${item.symbol}</div><span class="eyebrow">WE FOUND A CRAFT</span><h2 class="result-title">这是 · ${item.title}</h2><p class="result-desc">${item.description}</p><div class="result-meta"><span>${item.category}</span><span>${item.maker}</span></div><div class="result-actions"><button data-result-action="百科">查看百科<small>了解来处</small></button><button data-result-action="问答">问传承人<small>继续聊聊</small></button><button data-result-action="跟学">我也要试试<small>动手体验</small></button></div>`);
-  addEntry('看了', craft, item.title, '认识一件非遗手艺');
+  addEntry('看了', craft, item.title, source === 'audio' ? '用声音认识一门非遗' : '认识一件非遗手艺');
 }
-function identify(craft, hasPhoto = false) {
+function identify(craft, source = 'sample') {
   clearTimeout(recognitionTimer);
   showModal(`<div class="modal-top"><span>正在辨认作品</span><button class="modal-close" aria-label="关闭">×</button></div><div class="demo-frame">⌾</div><p class="demo-copy">匠人正在从纹样与做法里寻找线索…</p>`);
-  recognitionTimer = setTimeout(() => resultModal(craft, hasPhoto), 950);
+  recognitionTimer = setTimeout(() => resultModal(craft, source), 950);
 }
 function openCandidates() {
   showModal(`<div class="modal-top"><span>IDENTIFY · 可能的手艺</span><button class="modal-close" aria-label="关闭">×</button></div><h2 class="result-title">这件作品有点特别</h2><p class="result-desc">我们找到几种相近的传统技艺，选一个最像的继续了解。</p>${['漆扇','扎染','竹编'].map(name => { const item = crafts[name]; return `<button class="candidate" data-candidate="${name}"><span class="candidate-art ${item.art}" style="background-image:url('${item.photo}')">${item.symbol}</span><span><strong>${item.title}</strong><small>${item.category}</small></span><b>→</b></button>`; }).join('')}<button class="delete-link" id="noMatchBtn">都不太像？用文字描述，让传承人帮你看看</button>`);
@@ -229,14 +237,85 @@ $$('[data-go]').forEach(button => button.addEventListener('click', () => {
   if (button.dataset.go === 'learn') { $('#lessonView').classList.add('hidden'); $('#courseList').classList.remove('hidden'); }
   navigate(button.dataset.go);
 }));
-$('#cameraBtn').addEventListener('click', () => $('#photoInput').click());
-$('#uploadBtn').addEventListener('click', () => $('#photoInput').click());
-$('#photoInput').addEventListener('change', event => {
+$('#cameraBtn').addEventListener('click', showPhotoChoice);
+$('#uploadBtn').addEventListener('click', showPhotoChoice);
+$('#photoCaptureInput').addEventListener('change', handlePhoto);
+$('#photoGalleryInput').addEventListener('change', handlePhoto);
+$('#audioMethodBtn').addEventListener('click', showAudioPanel);
+$('#audioInput').addEventListener('change', event => { if (event.target.files?.length) identifyAudio(); event.target.value = ''; });
+function handlePhoto(event) {
   if (!event.target.files?.length) return;
   const craft = ['漆扇', '扎染', '竹编'][Math.floor(Math.random() * 3)];
-  identify(craft, true);
+  identify(craft, 'photo');
   event.target.value = '';
-});
+}
+function showPhotoChoice() {
+  showModal(`<div class="modal-top"><span>识别方式</span><button class="modal-close" aria-label="关闭">×</button></div><div class="choice-sheet"><div class="sheet-title">用照片认识非遗</div><div class="sheet-sub">选择一张清晰呈现作品主体的照片</div><button class="choice-option" id="choiceCapture"><span class="option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5a2 2 0 0 1 2-2h1.4l1.1-2h7l1.1 2H18a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13.2" r="3"/></svg></span><span class="option-copy"><strong>现场拍照</strong><small>对准身边的非遗作品拍摄</small></span><b>→</b></button><button class="choice-option" id="choiceGallery"><span class="option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2.5"/><circle cx="9" cy="9.5" r="1.6"/><path d="M6 17.5 10.2 13l3 3 2.4-2.3 2.4 2.7"/></svg></span><span class="option-copy"><strong>从相册选择</strong><small>上传图库中的作品照片</small></span><b>→</b></button></div>`);
+  $('#modalContent').addEventListener('click', event => {
+    if (event.target.id === 'choiceCapture') { closeModal(); setTimeout(() => $('#photoCaptureInput').click(), 60); }
+    if (event.target.id === 'choiceGallery') { closeModal(); setTimeout(() => $('#photoGalleryInput').click(), 60); }
+  });
+}
+const audioCrafts = ['侗族大歌', '古琴艺术', '苏州评弹'];
+let recorder = null, recorderStream = null, recorderChunks = [], recordingClock = null, recordingSeconds = 0;
+function showAudioPanel() {
+  showModal(`<div class="modal-top"><span>AUDIO · 用声音认识非遗</span><button class="modal-close" aria-label="关闭">×</button></div><div class="recorder-panel"><div class="record-stage"><span class="record-ring"></span><button class="record-btn" id="recordToggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3.5M8.5 21.5h7"/></svg><strong>开始录音</strong><small>对准声音来源</small></button></div><div class="wave-bars hidden" id="waveBars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="recorder-timer hidden" id="recordTimer">00:00</div><p class="recorder-hint">录下一段民歌、戏曲或乐器声。尽量保持环境安静，让旋律更清晰。</p><button class="recorder-file" id="audioFileBtn">或从文件选择一段音频</button><div class="recorder-meta">支持 MP3、WAV、M4A · 仅用于本次识别</div></div>`);
+  $('#recordToggle').addEventListener('click', toggleRecording);
+  $('#audioFileBtn').addEventListener('click', () => $('#audioInput').click());
+}
+function toggleRecording() {
+  const btn = $('#recordToggle');
+  if (btn.classList.contains('disabled')) return;
+  if (!recorder || recorder.state === 'inactive') {
+    startRecording(btn);
+  } else {
+    stopRecording();
+  }
+}
+async function startRecording(btn) {
+  const mic = document.querySelector('.record-btn svg');
+  const wave = $('#waveBars'), timer = $('#recordTimer');
+  try {
+    if (!navigator.mediaDevices?.getUserMedia) throw new Error('unsupported');
+    recorderStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (error) {
+    toast('无法访问麦克风，可改用文件上传音频');
+    btn.disabled = true; btn.classList.add('disabled'); btn.querySelector('strong').textContent = '麦克风不可用';
+    return;
+  }
+  recorderChunks = [];
+  recorder = new MediaRecorder(recorderStream);
+  recorder.ondataavailable = event => { if (event.data.size) recorderChunks.push(event.data); };
+  recorder.onstop = () => {
+    recorderStream.getTracks().forEach(track => track.stop());
+    recorder = null;
+    btn.classList.remove('recording');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3.5M8.5 21.5h7"/></svg><strong>再录一次</strong><small>录音已完成</small>';
+    clearInterval(recordingClock); recordingSeconds = 0;
+    wave.classList.add('hidden'); timer.classList.add('hidden');
+    identifyAudio();
+  };
+  recorder.start();
+  recordingSeconds = 0;
+  btn.classList.add('recording');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3.5M8.5 21.5h7"/></svg><strong>停止录音</strong><small>再点一下完成</small>';
+  wave.classList.remove('hidden'); timer.classList.remove('hidden');
+  recordingClock = setInterval(() => {
+    recordingSeconds += 1;
+    $('#recordTimer').textContent = String(Math.floor(recordingSeconds / 60)).padStart(2, '0') + ':' + String(recordingSeconds % 60).padStart(2, '0');
+  }, 1000);
+}
+function stopRecording() {
+  if (recorder && recorder.state !== 'inactive') recorder.stop();
+}
+function identifyAudio() {
+  clearTimeout(recognitionTimer);
+  showModal(`<div class="modal-top"><span>正在辨认声音</span><button class="modal-close" aria-label="关闭">×</button></div><div class="demo-frame sound-art">♪</div><p class="demo-copy">匠人正从旋律、唱腔与演奏里寻找线索…</p>`);
+  recognitionTimer = setTimeout(() => {
+    const name = audioCrafts[Math.floor(Math.random() * audioCrafts.length)];
+    resultModal(name, 'audio');
+  }, 1100);
+}
 $$('[data-sample]').forEach(button => button.addEventListener('click', () => identify(button.dataset.sample)));
 $$('[data-craft]').forEach(button => button.addEventListener('click', () => { navigate('learn'); startLesson(`${button.dataset.craft}体验`); }));
 $$('[data-course]').forEach(button => button.addEventListener('click', () => startLesson(button.dataset.course)));

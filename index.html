@@ -36,7 +36,6 @@
             <span class="camera-action">开始识别 <b>↗</b></span>
             <span class="sun-doodle"></span>
           </button>
-          <input type="file" id="photoInput" accept="image/*" capture="environment" hidden />
         </div>
         <div class="section-heading"><div><span class="eyebrow">START WITH A CRAFT</span><h2>从一门手艺开始</h2></div><button class="text-button" data-go="learn">全部项目 ↗</button></div>
         <div class="craft-row">
@@ -49,14 +48,18 @@
 
       <section class="screen" id="identifyScreen">
         <div class="page-heading"><span class="eyebrow">LOOK CLOSER</span><h1>让好奇，<em>有答案。</em></h1><p>拍一拍身边的非遗作品，不必先知道它的名字。</p></div>
-        <button class="upload-panel" id="uploadBtn"><span class="upload-symbol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5a2 2 0 0 1 2-2h1.4l1.1-2h7l1.1 2H18a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13.2" r="3"/></svg></span><strong>拍照或从相册选择</strong><small>清晰呈现作品主体，识别更准确</small><span class="upload-rule"></span><span class="upload-tip">支持 JPG、PNG 图片</span></button>
+        <button class="upload-panel" id="uploadBtn"><span class="upload-symbol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5a2 2 0 0 1 2-2h1.4l1.1-2h7l1.1 2H18a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13.2" r="3"/></svg></span><strong>拍照识别</strong><small>现场拍摄，或从相册上传作品照片</small><span class="upload-rule"></span><span class="upload-tip">支持现场拍照 · 从相册选择 JPG、PNG</span></button>
+        <button class="audio-entry" id="audioMethodBtn"><span class="audio-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 10v4a7 7 0 0 0 14 0v-4"/><rect x="10" y="3" width="4" height="13" rx="2"/></svg></span><span class="audio-copy"><strong>音频识别</strong><small>录一段民歌、戏曲或乐器声，认识它的来处</small></span><b>↗</b></button>
         <div class="section-heading compact"><div><span class="eyebrow">TRY A SAMPLE</span><h2>先看看怎么识别</h2></div></div>
         <div class="sample-list">
           <button class="sample-item" data-sample="漆扇"><span class="sample-thumb" style="background:#f1e2cf url('https://aka.doubaocdn.com/s/RDdxZYFrQ2') center/cover no-repeat"></span><span><strong>福州漆扇</strong><small>漆艺 · 福建福州</small></span><b>↗</b></button>
           <button class="sample-item" data-sample="扎染"><span class="sample-thumb" style="background:#e6eef3 url('https://aka.doubaocdn.com/s/VsCbtVoInK') center/cover no-repeat"></span><span><strong>白族扎染</strong><small>染织技艺 · 云南大理</small></span><b>↗</b></button>
           <button class="sample-item" data-sample="竹编"><span class="sample-thumb" style="background:#e6ecd8 url('https://aka.doubaocdn.com/s/EXSelYQjD9') center/cover no-repeat"></span><span><strong>东阳竹编</strong><small>传统技艺 · 浙江东阳</small></span><b>↗</b></button>
         </div>
-        <div class="privacy-note">⌑　照片仅用于本次识别，也可在手账中回看</div>
+        <div class="privacy-note">⌑　照片与录音仅用于本次识别，也可在手账中回看</div>
+        <input type="file" id="audioInput" accept="audio/*" hidden />
+        <input type="file" id="photoCaptureInput" accept="image/*" capture="environment" hidden />
+        <input type="file" id="photoGalleryInput" accept="image/*" hidden />
       </section>
 
       <section class="screen" id="chatScreen">

@@ -121,3 +121,57 @@ main{padding:0 20px 18px}
 /* 识别候选列表：真实作品照片缩略图 */
 .candidate-art{background-size:cover;background-position:center;background-repeat:no-repeat;background-color:#dfeaf1;font-size:0}
 .candidate-art.tie-dye:before,.candidate-art.fan-art:before,.candidate-art.weave-art:before{content:none;background:none;clip-path:none}
+
+/* ==== 音频识别入口（识别页） ==== */
+.audio-entry{width:100%;height:76px;display:flex;align-items:center;gap:13px;margin-top:10px;padding:0 15px;border:1px dashed #a9c4cd;border-radius:16px;background:linear-gradient(145deg,#f4f7f8,#edf2f4);color:var(--ink);text-align:left;position:relative}
+.audio-entry:before{content:'';position:absolute;inset:8px;border:1px dashed #bcd2da;border-radius:11px;pointer-events:none}
+.audio-icon{width:46px;height:46px;border-radius:50%;background:#e5eff4;color:#3f7f96;display:grid;place-items:center;flex:none;box-shadow:0 4px 10px #3e6c881c}
+.audio-icon svg{width:22px;height:22px}
+.audio-copy{display:flex;flex-direction:column;gap:5px;min-width:0}
+.audio-copy strong{font-family:var(--serif);font-size:14px;color:#27475c}
+.audio-copy small{font-size:9px;color:#8298a8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.audio-entry>b{margin-left:auto;color:#5c8da0;position:relative;z-index:1}
+.audio-entry:active{transform:translateY(1px)}
+/* 音频识别进入入口：录音中的徽标提示 */
+.audio-live{width:7px;height:7px;border-radius:50%;background:#df3e4f;animation:blink 1s infinite}
+
+/* ==== 识别方式选择（拍照 / 从相册） ==== */
+.choice-sheet{display:flex;flex-direction:column}
+.choice-sheet .sheet-title{text-align:center;font-family:var(--serif);font-size:15px;color:#1c3554;margin:2px 0 4px}
+.choice-sheet .sheet-sub{text-align:center;font-size:9px;color:#8298a8;margin-bottom:15px}
+.choice-option{width:100%;display:flex;align-items:center;gap:13px;padding:13px 14px;border:1px solid #e7eef4;border-radius:13px;background:#f7fbfe;color:var(--ink);margin:0 0 10px;text-align:left}
+.choice-option .option-icon{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;flex:none;background:#e8f2fb;color:#3f86be}
+.choice-option .option-icon svg{width:21px;height:21px}
+.choice-option .option-copy{display:flex;flex-direction:column;gap:4px}
+.choice-option .option-copy strong{font-family:var(--serif);font-size:12px;color:#294b66}
+.choice-option .option-copy small{font-size:9px;color:#8298a8}
+.choice-option b{margin-left:auto;color:#7fa0b5}
+
+/* ==== 录音面板（音频识别） ==== */
+.recorder-head{display:flex;justify-content:space-between;align-items:center}
+.recorder-head span{font-size:9px;letter-spacing:.1em;color:#849394}
+.recorder-panel{padding:6px 0 2px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.record-stage{position:relative;width:190px;height:190px;display:grid;place-items:center;margin:10px auto 16px}
+.record-ring{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 38%,#fff,#f0f6fb);box-shadow:0 6px 0 #fff,0 10px 26px #2e5b7926;display:grid;place-items:center}
+.record-ring:before,.record-ring:after{content:'';position:absolute;left:12px;right:12px;top:12px;bottom:12px;border:1px solid #cfe0ec;border-radius:50%}
+.record-ring:after{left:22px;right:22px;top:22px;bottom:22px;border-color:#e2edf5}
+.record-btn{position:relative;z-index:1;width:120px;height:120px;border-radius:50%;border:0;background:linear-gradient(150deg,#fff,#f1f7fc);box-shadow:0 4px 0 #fff,0 6px 14px #315a751c;color:#2b668b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.record-btn svg{width:40px;height:40px}
+.record-btn strong{font-family:var(--serif);font-size:11px;color:#2b668b}
+.record-btn small{font-size:8px;color:#8196a4}
+.record-btn.recording{color:#df3e4f}
+.record-btn.recording svg{color:#df3e4f}
+.record-btn.disabled{opacity:.55;pointer-events:none}
+.wave-bars{display:flex;align-items:center;gap:4px;height:26px;margin-bottom:14px}
+.wave-bars i{width:4px;border-radius:3px;background:#4ba4e4;animation:wave 1s ease-in-out infinite}
+.wave-bars i:nth-child(1){height:9px}.wave-bars i:nth-child(2){height:19px;animation-delay:.15s}.wave-bars i:nth-child(3){height:12px;animation-delay:.3s}.wave-bars i:nth-child(4){height:23px;animation-delay:.45s}.wave-bars i:nth-child(5){height:11px;animation-delay:.6s}.wave-bars i:nth-child(6){height:18px;animation-delay:.75s}.wave-bars i:nth-child(7){height:9px;animation-delay:.9s}
+@keyframes wave{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.recorder-hint{font-size:11px;color:#607b8c;line-height:1.8;margin:4px 0 13px}
+.recorder-file{border:0;background:none;color:#4a8ba0;font-size:10px;padding:7px 4px}
+.recorder-meta{font-size:9px;color:#8da0ab;margin-top:11px}
+.recorder-timer{font-size:22px;font-family:var(--serif);color:#c23f4d;margin:0 0 6px;font-variant-numeric:tabular-nums}
+/* 音频识别结果视觉 */
+.sound-art{background:linear-gradient(150deg,#e3f0fb,#d6e8f4) !important;color:#2b668b;font-size:0}
+.sound-art:before{content:'♪';font-size:64px;color:#2b668b;text-shadow:0 3px 12px #2e5b7926}
+.sound-art.weave-art:before,.sound-art.tie-dye:before,.sound-art.fan-art:before{content:none;background:none;clip-path:none}
