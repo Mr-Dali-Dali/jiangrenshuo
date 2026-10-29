@@ -175,3 +175,14 @@ main{padding:0 20px 18px}
 .sound-art{background:linear-gradient(150deg,#e3f0fb,#d6e8f4) !important;color:#2b668b;font-size:0}
 .sound-art:before{content:'♪';font-size:64px;color:#2b668b;text-shadow:0 3px 12px #2e5b7926}
 .sound-art.weave-art:before,.sound-art.tie-dye:before,.sound-art.fan-art:before{content:none;background:none;clip-path:none}
+
+/* ==== 首页：和传承人对话入口 ==== */
+.ask-entry{width:100%;display:flex;align-items:center;gap:13px;padding:13px 14px;border:1px solid #e2edf4;border-radius:14px;background:linear-gradient(150deg,#eef7fc,#f7fbfd);color:var(--ink);text-align:left;margin:0 0 6px}
+.ask-icon{width:42px;height:42px;border-radius:12px;background:#e6f2fb;color:#3f86be;display:grid;place-items:center;flex:none}
+.ask-icon svg{width:21px;height:21px}
+.ask-copy{display:flex;flex-direction:column;gap:5px;min-width:0}
+.ask-copy strong{font-family:var(--serif);font-size:12px;color:#294b66}
+.ask-copy small{font-size:9px;color:#8298a8;line-height:1.5}
+.ask-entry>b{margin-left:auto;color:#7fa0b5;display:grid;place-items:center}
+.ask-entry>b svg{width:16px;height:16px}
+.ask-entry:active{transform:translateY(1px)}
