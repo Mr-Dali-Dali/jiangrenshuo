@@ -105,8 +105,10 @@ function updateStep() {
   $('#stepNumber').textContent = String(currentStep + 1).padStart(2, '0');
   const item = crafts[currentCraft] || crafts.扎染;
   $('#lessonVisual').style.backgroundImage = `linear-gradient(160deg,rgba(18,34,48,.18),rgba(18,34,48,.05)),url('${item.photo}')`;
-  $('#stepTrack').innerHTML = lessonSteps.map((_, index) => `${index ? `<span class="step-link ${index <= currentStep ? 'done' : ''}"></span>` : ''}<span class="step-dot ${index < currentStep ? 'done' : index === currentStep ? 'current' : ''}">${index < currentStep ? '✓' : index + 1}</span>`).join('');
+  $('#stepTrack').innerHTML = lessonSteps.map((_, index) => `${index ? `<span class="step-link ${index <= currentStep ? 'done' : ''}"></span>` : ''}<button type="button" class="step-dot ${index < currentStep ? 'done' : index === currentStep ? 'current' : ''}" data-step="${index}" aria-label="跳到第 ${index + 1} 步">${index < currentStep ? '✓' : index + 1}</button>`).join('');
   $('#lessonFeedback').classList.add('hidden');
+  $('#checkStep').onclick = null;
+  $('#checkStep').querySelector('strong').textContent = '拍好啦，让匠人看看';
   $('#checkStep').disabled = false;
   $('#checkStep').style.opacity = '1';
 }
@@ -161,6 +163,16 @@ function advanceStep() {
   $('#statWorks').textContent = String(Number($('#statWorks').textContent) + 1);
   showModal(`<div class="modal-top"><span>A SMALL MASTERPIECE</span><button class="modal-close" aria-label="关闭">×</button></div><div class="demo-frame">✳</div><span class="eyebrow">你完成了一件手艺</span><h2 class="result-title">把耐心，染成了喜欢的样子。</h2><p class="result-desc">每一道纹路都只属于你。作品和这段跟学旅程已经收进手账。</p><button class="modal-primary" id="finishLesson">收进我的手账</button>`);
   $('#modalContent').addEventListener('click', event => { if (event.target.id === 'finishLesson') { closeModal(); $('#courseList').classList.remove('hidden'); $('#lessonView').classList.add('hidden'); navigate('journal'); } });
+}
+function jumpToStep(index) {
+  if (index < 0 || index >= lessonSteps.length) return;
+  if (index === currentStep) return;
+  currentStep = index;
+  stepAttempts = 0;
+  try { localStorage.setItem(`lesson-step-${currentCraft}`, String(currentStep)); } catch {}
+  updateStep();
+  $('#appMain').scrollTo({ top: 0, behavior: 'smooth' });
+  toast(index > 0 ? `已跳到第 ${index + 1} 步` : '回到第一步');
 }
 function renderJournal() {
   const visible = entries.filter(entry => activeFilter === '全部' || entry.kind === activeFilter);
@@ -324,6 +336,10 @@ $('#checkStep').addEventListener('click', mockStepCheck);
 $('#stepPhotoInput').addEventListener('change', event => { if (event.target.files?.length) mockStepCheck(); event.target.value = ''; });
 $('#lessonVisual').addEventListener('click', () => $('#stepPhotoInput').click());
 $('#demoBtn').addEventListener('click', () => showModal(`<div class="modal-top"><span>慢动作演示 · 第 ${currentStep + 1} 步</span><button class="modal-close" aria-label="关闭">×</button></div><div class="demo-frame">${currentCraft === '扎染' ? '✳' : crafts[currentCraft].symbol}</div><p class="demo-copy">先看手势，再跟着自己的节奏试一试。</p><button class="modal-primary modal-close">我知道啦</button>`));
+$('#stepTrack').addEventListener('click', event => {
+  const dot = event.target.closest('.step-dot');
+  if (dot) jumpToStep(Number(dot.dataset.step));
+});
 $('#skipStep').addEventListener('click', () => { if (currentStep < lessonSteps.length - 1) { currentStep += 1; updateStep(); } else toast('已经是最后一步啦'); });
 $('#sendBtn').addEventListener('click', () => { const input = $('#chatInput'); const value = input.value; input.value = ''; $('#charCount').textContent = '0'; sendQuestion(value); });
 $('#chatInput').addEventListener('input', event => { $('#charCount').textContent = String(event.target.value.length); event.target.style.height = 'auto'; event.target.style.height = `${Math.min(event.target.scrollHeight, 100)}px`; });

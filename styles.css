@@ -186,3 +186,10 @@ main{padding:0 20px 18px}
 .ask-entry>b{margin-left:auto;color:#7fa0b5;display:grid;place-items:center}
 .ask-entry>b svg{width:16px;height:16px}
 .ask-entry:active{transform:translateY(1px)}
+
+/* ==== 跟学：进度条步骤可点击跳转 ==== */
+.step-dot{padding:0;cursor:pointer;line-height:1;appearance:none;-webkit-appearance:none;box-shadow:none;transition:transform .12s ease,box-shadow .15s ease}
+.step-dot:hover{transform:scale(1.15)}
+.step-dot:active{transform:scale(.95)}
+.step-dot:focus-visible{outline:2px solid #4d91a7;outline-offset:2px}
+.step-dot.current{box-shadow:0 0 0 4px #4d91a726}
