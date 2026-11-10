@@ -130,3 +130,18 @@ IDENTIFY_MODEL=qwen3.8-flash
 - `非遗知识库15项深度版说明.md`：逐项说明问答数量、代表作品、传承人、来源与可信度标注。
 - `heritage-chunks-v1.json`：供问答检索使用的 614 个切块单元。
 - `backend/`：RAG 问答后端（检索 + Prompt + 大模型直连），详见 `backend/README.md`。
+
+
+## 打包成安卓 App
+
+安装包用 Capacitor 把同一份网页打进原生 App，构建跑在 GitHub Actions（本机不需要 JDK 和 Android SDK）：
+
+- `tools/build-web.mjs` 从站点文件生成 `www/`，同时去掉 Service Worker 注册，避免 App 内卡在旧缓存
+- `npx cap add android` 生成原生工程，`tools/patch-android.mjs` 补上明文 HTTP 放行与麦克风、相机权限
+- `./gradlew assembleDebug` 出包，上传 artifact 并发布到 Release
+
+触发方式：改动前端文件推送即自动构建，也可在 Actions 页面手动执行 `Run workflow`。
+
+安装后进「我的 → 后端服务地址」，填电脑隧道地址（`https://xxxx.trycloudflare.com`），保存后自动重载生效。隧道地址每次重启都会变，改这一处即可，不必重新打包；不填或填错时自动使用 App 内置的 15 项知识库。
+
+当前产物为 debug 签名，可直接安装用于演示，不能上架应用商店；正式发布需换 release keystore。
