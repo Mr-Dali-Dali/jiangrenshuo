@@ -13,7 +13,7 @@
   <link rel="icon" href="./icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./icon.svg" />
   <title>匠人说 · 非遗生活</title>
-  <link rel="stylesheet" href="./styles.css?v=20261029" />
+  <link rel="stylesheet" href="./styles.css?v=20261110" />
 </head>
 <body>
   <div class="app-shell">
@@ -39,9 +39,9 @@
         </div>
         <div class="section-heading"><div><span class="eyebrow">START WITH A CRAFT</span><h2>从一门手艺开始</h2></div><button class="text-button" data-go="learn">全部项目 ↗</button></div>
         <div class="craft-row">
-          <button class="craft-card" data-craft="扎染"><span class="craft-art" style="background:#e6eef3 url('https://aka.doubaocdn.com/s/VsCbtVoInK') center/cover no-repeat"></span><span class="craft-label">扎染</span><small>蓝白之间的惊喜</small></button>
-          <button class="craft-card" data-craft="漆扇"><span class="craft-art" style="background:#f1e2cf url('https://aka.doubaocdn.com/s/RDdxZYFrQ2') center/cover no-repeat"></span><span class="craft-label">福州漆扇</span><small>一扇一世界</small></button>
-          <button class="craft-card" data-craft="竹编"><span class="craft-art" style="background:#e6ecd8 url('https://aka.doubaocdn.com/s/EXSelYQjD9') center/cover no-repeat"></span><span class="craft-label">竹编</span><small>经纬里的巧思</small></button>
+          <button class="craft-card" data-craft="脱胎漆器"><span class="craft-art" style="background:#f1e2cf url('https://aka.doubaocdn.com/s/RDdxZYFrQ2') center/cover no-repeat"></span><span class="craft-label">脱胎漆器</span><small>轻得能飘起来</small></button>
+          <button class="craft-card" data-craft="扎染"><span class="craft-art" style="background:#e6eef3 url('https://aka.doubaocdn.com/s/VsCbtVoInK') center/cover no-repeat"></span><span class="craft-label">白族扎染</span><small>蓝白之间的惊喜</small></button>
+          <button class="craft-card" data-craft="竹编"><span class="craft-art" style="background:#e6ecd8 url('https://aka.doubaocdn.com/s/EXSelYQjD9') center/cover no-repeat"></span><span class="craft-label">东阳竹编</span><small>经纬里的巧思</small></button>
         </div>
         <div class="home-note"><span class="note-icon">✳</span><div><strong>手艺不远，就在身边</strong><p>看见、问懂、动手做，再把每一步收进手账。</p></div><span>→</span></div>
         <div class="section-heading"><div><span class="eyebrow">ASK A CRAFTSMAN</span><h2>跟传承人聊两句</h2></div></div>
@@ -54,9 +54,9 @@
         <button class="audio-entry" id="audioMethodBtn"><span class="audio-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 10v4a7 7 0 0 0 14 0v-4"/><rect x="10" y="3" width="4" height="13" rx="2"/></svg></span><span class="audio-copy"><strong>音频识别</strong><small>录一段民歌、戏曲或乐器声，认识它的来处</small></span><b>↗</b></button>
         <div class="section-heading compact"><div><span class="eyebrow">TRY A SAMPLE</span><h2>先看看怎么识别</h2></div></div>
         <div class="sample-list">
-          <button class="sample-item" data-sample="漆扇"><span class="sample-thumb" style="background:#f1e2cf url('https://aka.doubaocdn.com/s/RDdxZYFrQ2') center/cover no-repeat"></span><span><strong>福州漆扇</strong><small>漆艺 · 福建福州</small></span><b>↗</b></button>
-          <button class="sample-item" data-sample="扎染"><span class="sample-thumb" style="background:#e6eef3 url('https://aka.doubaocdn.com/s/VsCbtVoInK') center/cover no-repeat"></span><span><strong>白族扎染</strong><small>染织技艺 · 云南大理</small></span><b>↗</b></button>
-          <button class="sample-item" data-sample="竹编"><span class="sample-thumb" style="background:#e6ecd8 url('https://aka.doubaocdn.com/s/EXSelYQjD9') center/cover no-repeat"></span><span><strong>东阳竹编</strong><small>传统技艺 · 浙江东阳</small></span><b>↗</b></button>
+          <button class="sample-item" data-sample="脱胎漆器"><span class="sample-thumb" style="background:#f1e2cf url('https://aka.doubaocdn.com/s/RDdxZYFrQ2') center/cover no-repeat"></span><span><strong>福州脱胎漆器髹饰技艺</strong><small>传统技艺 · 福建福州</small></span><b>↗</b></button>
+          <button class="sample-item" data-sample="扎染"><span class="sample-thumb" style="background:#e6eef3 url('https://aka.doubaocdn.com/s/VsCbtVoInK') center/cover no-repeat"></span><span><strong>白族扎染技艺</strong><small>传统技艺·织造印染 · 云南大理</small></span><b>↗</b></button>
+          <button class="sample-item" data-sample="竹编"><span class="sample-thumb" style="background:#e6ecd8 url('https://aka.doubaocdn.com/s/EXSelYQjD9') center/cover no-repeat"></span><span><strong>东阳竹编</strong><small>传统美术（竹编）· 浙江东阳</small></span><b>↗</b></button>
         </div>
         <div class="privacy-note">⌑　照片与录音仅用于本次识别，也可在手账中回看</div>
         <input type="file" id="audioInput" accept="audio/*" hidden />
@@ -70,26 +70,26 @@
         <div class="chat-scroll" id="chatMessages">
           <div class="day-divider">今天 · 与手艺人聊聊</div>
           <div class="message assistant"><span class="message-avatar">匠</span><div class="bubble-wrap"><small>传承人</small><div class="bubble">你好呀，我是匠人说里的非遗传承人。你最近看到什么手艺，或者心里有什么好奇？都可以用自己的话问我。</div></div></div>
-          <div class="suggestions"><span>你可以这样问</span><button class="suggestion">漆扇上的花纹是怎么做出来的？</button><button class="suggestion">扎染为什么会有深浅不一的蓝？</button></div>
+          <div class="suggestions"><span>你可以这样问</span><button class="suggestion">脱胎漆器为什么那么轻？</button><button class="suggestion">扎染为什么会有深浅不一的蓝？</button></div>
         </div>
         <div class="chat-composer"><textarea id="chatInput" rows="1" maxlength="100" placeholder="说说你想知道的事…"></textarea><button id="sendBtn" aria-label="发送"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button><small><span id="charCount">0</span>/100</small></div>
-        <div class="chat-footnote">回答由非遗知识库模拟生成 · 参考资料可展开查看</div>
+        <div class="chat-footnote">回答来自 15 项非遗知识库检索 · 参考资料可展开</div>
       </section>
 
       <section class="screen" id="learnScreen">
         <div class="page-heading learn-heading"><span class="eyebrow">MAKE IT YOURS</span><h1>跟着手艺人，<em>做一件。</em></h1><p>每一步都有提醒，慢慢来就很好。</p></div>
         <div id="courseList">
-          <div class="course-feature"><div class="course-art" style="background-image:url('https://aka.doubaocdn.com/s/VsCbtVoInK')"><small>蓝染的呼吸</small></div><div class="course-copy"><span class="pill blue-pill">新手友好 · 8 步</span><h2>做一块自己的<br />蓝白扎染方巾</h2><p>从折叠、捆扎到染色，跟着步骤体验蓝白相间的惊喜。</p><div class="course-meta"><span>约 25 分钟</span><span>● ● ● ● ○</span></div><button class="primary-button start-course" data-course="扎染方巾">开始跟学 <b>→</b></button></div></div>
+          <div class="course-feature"><div class="course-art" style="background-image:url('https://aka.doubaocdn.com/s/VsCbtVoInK')"><small>蓝染的呼吸</small></div><div class="course-copy"><span class="pill blue-pill">新手友好 · 5 步</span><h2>做一块自己的<br />蓝白扎染方巾</h2><p>从画稿、绞扎到入缸浸染，跟着步骤体验蓝白相间的惊喜。</p><div class="course-meta"><span>约 25 分钟</span><span>● ● ● ● ○</span></div><button class="primary-button start-course" data-course="扎染方巾">开始跟学 <b>→</b></button></div></div>
           <div class="section-heading compact"><div><span class="eyebrow">MORE TO MAKE</span><h2>还有这些手艺</h2></div></div>
-          <button class="course-row" data-course="漆扇体验"><span class="course-mini" style="background:#f1e2cf url('https://aka.doubaocdn.com/s/RDdxZYFrQ2') center/cover no-repeat"></span><span><strong>画一把流光漆扇</strong><small>漆艺 · 6 步 · 约 20 分钟</small></span><b>↗</b></button>
-          <button class="course-row" data-course="竹编杯垫"><span class="course-mini" style="background:#e6ecd8 url('https://aka.doubaocdn.com/s/EXSelYQjD9') center/cover no-repeat"></span><span><strong>编一只竹编杯垫</strong><small>竹编 · 10 步 · 约 35 分钟</small></span><b>↗</b></button>
+          <button class="course-row" data-course="脱胎漆器"><span class="course-mini" style="background:#f1e2cf url('https://aka.doubaocdn.com/s/RDdxZYFrQ2') center/cover no-repeat"></span><span><strong>给一只小漆碟推光</strong><small>脱胎漆器 · 5 步 · 约 25 分钟</small></span><b>↗</b></button>
+          <button class="course-row" data-course="竹编"><span class="course-mini" style="background:#e6ecd8 url('https://aka.doubaocdn.com/s/EXSelYQjD9') center/cover no-repeat"></span><span><strong>编一只竹编杯垫</strong><small>东阳竹编 · 5 步 · 约 30 分钟</small></span><b>↗</b></button>
         </div>
         <div class="lesson-view hidden" id="lessonView">
           <button class="back-link" id="backCourses">← 返回项目</button>
-          <div class="lesson-title"><div class="lesson-meta"><span class="pill blue-pill" id="lessonCraft">扎染体验</span><span class="step-count" id="stepCount">第 1 步 · 共 6 步</span></div><h2 id="lessonName">扎好第一道纹路</h2><p id="lessonDesc">把布料沿对角线轻轻折叠，边缘尽量对齐。</p></div>
+          <div class="lesson-title"><div class="lesson-meta"><span class="pill blue-pill" id="lessonCraft">扎染体验</span><span class="step-count" id="stepCount">第 1 步 · 共 5 步</span></div><h2 id="lessonName">画稿定位</h2><p id="lessonDesc">把白布铺平，用粉笔或针线在布面上画出想要的小纹样，定好扎花的位置。</p></div>
           <div class="step-track" id="stepTrack"></div>
           <div class="lesson-visual" id="lessonVisual"><span>STEP <b id="stepNumber">01</b></span></div>
-          <div class="tip-card"><span>✦</span><div><strong>这一步容易忽略</strong><p id="lessonTip">折叠时不要拉得太紧，留一点空间让染料慢慢渗开。</p></div></div>
+          <div class="tip-card"><span>✦</span><div><strong>这一步容易忽略</strong><p id="lessonTip">画太密太挤，染完花会连成一片，留白要给足呼吸空间。</p></div></div>
           <div class="feedback hidden" id="lessonFeedback"></div>
           <button class="camera-step" id="checkStep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5a2 2 0 0 1 2-2h1.4l1.1-2h7l1.1 2H18a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13.2" r="3"/></svg><strong>拍好啦，让匠人看看</strong><small>上传作品照片，获得下一步建议</small></button>
           <div class="lesson-actions"><button id="demoBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7Z"/></svg>　看慢动作演示</button><button id="skipStep">先看下一步　<b>→</b></button></div>
@@ -118,6 +118,7 @@
     <div class="toast" id="toast"></div>
     <div class="modal-backdrop hidden" id="modal"><div class="modal-card" id="modalContent"></div></div>
   </div>
-  <script src="./app.js?v=20261029"></script>
+  <script src="./heritage-knowledge-15.js?v=20261110d"></script>
+  <script src="./app.js?v=20261110g"></script>
 </body>
 </html>

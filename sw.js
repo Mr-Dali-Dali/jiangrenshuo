@@ -1,11 +1,28 @@
-const CACHE_NAME = 'jiangrenshuo-pwa-v2';
+const CACHE_NAME = 'jiangrenshuo-pwa-v9';
 const APP_FILES = [
   './',
   './index.html',
   './styles.css',
   './app.js',
+  './heritage-knowledge-15.js',
   './manifest.webmanifest',
-  './icon.svg'
+  './icon.svg',
+  './assets/topics/tuoqi-pan.jpg',
+  './assets/topics/tuoqi-qishan.jpg',
+  './assets/topics/zharan.jpg',
+  './assets/topics/zhubian.jpg',
+  './assets/topics/jingdezhen.jpg',
+  './assets/topics/zisha.jpg',
+  './assets/topics/yuxian-jianzhi.jpg',
+  './assets/topics/yangliuqing.jpg',
+  './assets/topics/tanghua.jpg',
+  './assets/topics/yunjin.jpg',
+  './assets/topics/jingtailan.jpg',
+  './assets/topics/piying.jpg',
+  './assets/topics/jingju.jpg',
+  './assets/topics/guqin.jpg',
+  './assets/topics/zhenjiu.jpg',
+  './assets/topics/jieqi.jpg'
 ];
 
 self.addEventListener('install', event => {

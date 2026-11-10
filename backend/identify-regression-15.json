@@ -1,0 +1,185 @@
+[
+  {
+    "expect": "脱胎漆器",
+    "file": "tuoqi-pan.jpg",
+    "got": "脱胎漆器",
+    "certain": true,
+    "confidence": 0.95,
+    "reason": "黑推光漆面有镜面反光，朱红描金纹饰，符合福州脱胎漆器髹饰技艺特征。",
+    "candidates": [
+      "景德镇制瓷"
+    ],
+    "error": null,
+    "sec": 2.9
+  },
+  {
+    "expect": "扎染",
+    "file": "zharan.jpg",
+    "got": "扎染",
+    "certain": true,
+    "confidence": 0.98,
+    "reason": "白布上呈现蓝白相间花纹，靛蓝色调具有明显的晕散和放射状特征。",
+    "candidates": [],
+    "error": null,
+    "sec": 2.9
+  },
+  {
+    "expect": "竹编",
+    "file": "zhubian.jpg",
+    "got": "竹编",
+    "certain": true,
+    "confidence": 0.98,
+    "reason": "画面展示多件竹篾经纬交织的篮筐器物，编织结构清晰可见。",
+    "candidates": [],
+    "error": null,
+    "sec": 1.7
+  },
+  {
+    "expect": "景德镇制瓷",
+    "file": "jingdezhen.jpg",
+    "got": "景德镇制瓷",
+    "certain": true,
+    "confidence": 0.95,
+    "reason": "画面展示在旋转陶轮上手工拉坯成型，符合景德镇制瓷工序特征",
+    "candidates": [
+      "宜兴紫砂陶"
+    ],
+    "error": null,
+    "sec": 3.3
+  },
+  {
+    "expect": "宜兴紫砂陶",
+    "file": "zisha.jpg",
+    "got": "宜兴紫砂陶",
+    "certain": true,
+    "confidence": 0.95,
+    "reason": "紫泥茶壶，表面亚光无釉，胎质含砂粒，刻绘竹叶纹饰",
+    "candidates": [
+      "景德镇制瓷"
+    ],
+    "error": null,
+    "sec": 5.7
+  },
+  {
+    "expect": "蔚县剪纸",
+    "file": "yuxian-jianzhi.jpg",
+    "got": "蔚县剪纸",
+    "certain": true,
+    "confidence": 0.95,
+    "reason": "画面呈现刀刻镂空线条，且色彩浓烈丰富，符合点染工艺特征。",
+    "candidates": [
+      "杨柳青木版年画"
+    ],
+    "error": null,
+    "sec": 2.0
+  },
+  {
+    "expect": "杨柳青木版年画",
+    "file": "yangliuqing.jpg",
+    "got": "杨柳青木版年画",
+    "certain": true,
+    "confidence": 0.95,
+    "reason": "画面为门神题材，色彩鲜亮线条匀整，左上角可见年画印章",
+    "candidates": [
+      "蔚县剪纸"
+    ],
+    "error": null,
+    "sec": 3.4
+  },
+  {
+    "expect": "成都糖画",
+    "file": "tanghua.jpg",
+    "got": "成都糖画",
+    "certain": true,
+    "confidence": 0.98,
+    "reason": "琥珀色半透明光泽，平面龙形造型，底部可见竹签支撑。",
+    "candidates": [],
+    "error": null,
+    "sec": 2.9
+  },
+  {
+    "expect": "南京云锦",
+    "file": "yunjin.jpg",
+    "got": "南京云锦",
+    "certain": true,
+    "confidence": 0.95,
+    "reason": "金线织造龙纹袍料，妆花工艺色彩斑斓，具有典型云锦特征",
+    "candidates": [
+      "景德镇制瓷"
+    ],
+    "error": null,
+    "sec": 12.7
+  },
+  {
+    "expect": "景泰蓝",
+    "file": "jingtailan.jpg",
+    "got": "景泰蓝",
+    "certain": true,
+    "confidence": 0.95,
+    "reason": "铜胎掐丝珐琅，蓝地填彩牡丹蝴蝶纹，口沿鎏金",
+    "candidates": [
+      "南京云锦"
+    ],
+    "error": null,
+    "sec": 8.4
+  },
+  {
+    "expect": "皮影戏",
+    "file": "piying.jpg",
+    "got": "皮影戏",
+    "certain": true,
+    "confidence": 0.98,
+    "reason": "兽皮雕刻侧脸造型，关节可动并带操纵签子，色彩透光鲜艳",
+    "candidates": [
+      "蔚县剪纸"
+    ],
+    "error": null,
+    "sec": 1.7
+  },
+  {
+    "expect": "京剧",
+    "file": "jingju.jpg",
+    "got": "京剧",
+    "certain": true,
+    "confidence": 0.98,
+    "reason": "人物头戴点翠凤冠插翎子，身披女靠，面部为典型戏曲旦角妆容。",
+    "candidates": [
+      "皮影戏"
+    ],
+    "error": null,
+    "sec": 3.7
+  },
+  {
+    "expect": "古琴艺术",
+    "file": "guqin.jpg",
+    "got": "古琴艺术",
+    "certain": true,
+    "confidence": 0.98,
+    "reason": "黑漆长琴身，七弦横置，面板可见白色徽位点",
+    "candidates": [],
+    "error": null,
+    "sec": 7.4
+  },
+  {
+    "expect": "中医针灸",
+    "file": "zhenjiu.jpg",
+    "got": "中医针灸",
+    "certain": true,
+    "confidence": 0.98,
+    "reason": "画面清晰展示了细长金属毫针刺入人体穴位及施术手法",
+    "candidates": [],
+    "error": null,
+    "sec": 3.2
+  },
+  {
+    "expect": "二十四节气",
+    "file": "jieqi.jpg",
+    "got": "二十四节气",
+    "certain": true,
+    "confidence": 0.95,
+    "reason": "画面右侧明确书写“秋分”二字，配以金黄银杏叶展现秋季物候特征。",
+    "candidates": [],
+    "error": null,
+    "sec": 11.6
+  }
+]
