@@ -261,3 +261,80 @@ main{padding:0 18px 4px}
   .lesson-visual{height:180px}
   .chat-scroll{min-height:160px}
 }
+
+/* ==== 徽章样式精修：金属浮雕奖章质感 ==== */
+.badge-item{gap:8px;margin:4px 0}
+.badge{
+  height:48px;width:48px;
+  border-radius:50%;
+  display:grid;place-items:center;
+  font-size:22px;
+  position:relative;
+  transition:transform .2s ease;
+}
+/* 金色徽章（初见非遗） */
+.badge.medal,
+.badge:not(.blue):not(.locked-badge){
+  background:
+    radial-gradient(circle at 32% 28%, #fff8e0 0%, transparent 42%),
+    linear-gradient(160deg, #f7e3a1 0%, #e8c26a 45%, #c8963e 100%);
+  color:#fff5d6;
+  text-shadow:0 1px 2px #8a5e1e, 0 0 8px rgba(255,235,180,.5);
+  box-shadow:
+    0 3px 8px rgba(180,130,50,.35),
+    inset 0 2px 3px rgba(255,255,255,.65),
+    inset 0 -3px 6px rgba(140,95,30,.4),
+    0 0 0 2px #fff2c8,
+    0 0 0 3px #d4a44f;
+}
+/* 蓝色徽章（蓝染新手） */
+.badge.blue{
+  background:
+    radial-gradient(circle at 32% 28%, #e8f4ff 0%, transparent 42%),
+    linear-gradient(160deg, #b8dcf5 0%, #6ba8d8 45%, #3d7ab0 100%);
+  color:#eaf6ff;
+  text-shadow:0 1px 2px #1d4a7a, 0 0 8px rgba(180,220,255,.5);
+  box-shadow:
+    0 3px 8px rgba(60,120,180,.35),
+    inset 0 2px 3px rgba(255,255,255,.6),
+    inset 0 -3px 6px rgba(30,80,130,.4),
+    0 0 0 2px #dceeff,
+    0 0 0 3px #6ea8d4;
+}
+/* 徽章内圈装饰线 */
+.badge:before{
+  content:'';position:absolute;inset:5px;
+  border-radius:50%;
+  border:1px dashed rgba(255,255,255,.45);
+  pointer-events:none;
+}
+/* 徽章底部高光 */
+.badge:after{
+  content:'';position:absolute;left:15%;right:15%;top:8%;
+  height:35%;border-radius:50%;
+  background:linear-gradient(180deg, rgba(255,255,255,.55), transparent);
+  pointer-events:none;
+}
+/* 锁定态徽章：磨砂灰 */
+.badge-item.locked .badge,
+.badge.locked-badge{
+  background:linear-gradient(160deg, #eef1f3 0%, #dde3e8 100%);
+  color:#b3bfc7;
+  text-shadow:none;
+  box-shadow:
+    0 2px 4px rgba(120,140,155,.2),
+    inset 0 1px 2px rgba(255,255,255,.8),
+    inset 0 -2px 4px rgba(160,175,188,.3),
+    0 0 0 2px #f5f7f9,
+    0 0 0 3px #d4dbe0;
+}
+.badge-item.locked .badge:before{border-color:rgba(180,190,200,.4)}
+.badge-item.locked .badge:after{opacity:.4}
+/* 徽章名称 */
+.badge-item small{
+  font-size:9px;
+  color:#5a7082;
+  font-weight:500;
+  letter-spacing:.02em;
+}
+.badge-item.locked small{color:#a8b4bc}
