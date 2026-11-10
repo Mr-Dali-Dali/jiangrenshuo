@@ -250,9 +250,23 @@ function identify(craft, source = 'sample') {
   recognitionTimer = setTimeout(() => resultModal(craft, source), 950);
 }
 
-/* ---------- 拍照 / 录音识别：调用本地后端，连不上时明确退回演示 ---------- */
-// 后端地址：默认本机 8000 端口；如需改，浏览器控制台执行 localStorage.setItem('artisan-api-base','https://你的域名') 后刷新
-const IDENTIFY_API = (localStorage.getItem('artisan-api-base') || 'http://127.0.0.1:8000').replace(/\/+$/, '');
+/* ---------- 拍照 / 录音识别：调用后端，连不上时明确退回演示 ---------- */
+// 后端地址优先级：URL 参数 ?api= > localStorage('artisan-api-base') > 本机 8000 端口
+// 分享给别人时把地址拼在链接里即可，如 .../index.html?api=https://xxx.trycloudflare.com
+function resolveApiBase() {
+  const fromQuery = new URLSearchParams(location.search).get('api');
+  if (fromQuery) {
+    try {
+      const u = new URL(fromQuery);
+      if (u.protocol === 'https:' || u.protocol === 'http:') {
+        localStorage.setItem('artisan-api-base', u.origin);
+        return u.origin.replace(/\/+$/, '');
+      }
+    } catch (err) { /* 参数不合法就忽略，继续走下面的回退 */ }
+  }
+  return (localStorage.getItem('artisan-api-base') || 'http://127.0.0.1:8000').replace(/\/+$/, '');
+}
+const IDENTIFY_API = resolveApiBase();
 
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
