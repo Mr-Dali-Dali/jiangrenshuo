@@ -502,7 +502,7 @@ async function backendReady() {
 
 async function askBackend(question) {
   const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
-  const timer = ctrl ? setTimeout(() => ctrl.abort(), 20000) : null;
+  const timer = ctrl ? setTimeout(() => ctrl.abort(), 50000) : null;
   try {
     if (!chatSessionId) {
       chatSessionId = `s-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
