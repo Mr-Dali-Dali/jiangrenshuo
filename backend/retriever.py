@@ -49,6 +49,9 @@ ALIASES = {
 
 # 查询意图词表：命中后对相应类型/段落的块加权（轻量意图路由，无额外依赖）
 _INTENT_HISTORY = ["历史", "起源", "来历", "由来", "怎么来", "谁发明", "创始人", "源流", "发展"]
+
+# 跨项目问题里，每个被点名项目至少保留的块数（避免资料多的项目挤占全部名额）
+PER_CRAFT_MIN = 3
 _INTENT_STEPS = ["怎么做", "如何做", "怎么做", "步骤", "流程", "制作", "工艺", "工序", "教程", "跟学", "学习", "方法"]
 _INTENT_INHERITORS = ["谁", "传承人", "大师", "传人", "代表人物", "师承", "徒弟", "名家"]
 _INTENT_WORKS = ["代表", "作品", "名作", "有名", "经典", "巅峰", "镇店"]
@@ -98,6 +101,7 @@ class Retriever:
         self.k1 = 1.2
         self.b = 0.75
         self.idf = {t: math.log((n - df + 0.5) / (df + 0.5) + 1.0) for t, df in self.df.items()}
+        self.craft_names = sorted({c["craft_name"] for c in self.chunks if c.get("craft_name")})
 
     def _bm25(self, q_tokens, idx):
         score = 0.0
@@ -166,6 +170,18 @@ class Retriever:
                     boost = max(boost, 2.5)
         return boost
 
+    def _preferred_types(self, question):
+        """问题意图对应的块型：跨项目补块时优先补这些，保证对比的是同一类材料。"""
+        if any(kw in question for kw in _INTENT_STEPS):
+            return [("craft_steps", None), ("encyclopedia", "工艺")]
+        if any(kw in question for kw in _INTENT_HISTORY):
+            return [("encyclopedia", "源流")]
+        if any(kw in question for kw in _INTENT_INHERITORS):
+            return [("inheritors", None)]
+        if any(kw in question for kw in _INTENT_WORKS):
+            return [("works", None)]
+        return []
+
     def search(self, question, top_k=8):
         """返回按分数降序的检索结果列表。"""
         q_tokens = self._expand_query(question)
@@ -184,8 +200,45 @@ class Retriever:
             scored.append((base + boost, idx))
         scored.sort(key=lambda x: -x[0])
 
+        picked = scored[:top_k]
+
+        # 一个问题点名多个项目时，给资料少的项目保底名额。
+        # 否则资料多的项目会占满 top_k，"A 和 B 有什么区别"这类问题拿不到另一方的材料，
+        # 模型只能回答"知识库未提供"——即使该项目的工艺段其实在库里。
+        mentioned = [name for name in self.craft_names if self._name_hit(question, name)]
+        if len(mentioned) >= 2:
+            preferred = self._preferred_types(question)
+            picked_idx = {idx for _, idx in picked}
+            extra = []
+            for name in mentioned:
+                owned = [(s, i) for s, i in scored if self.chunks[i]["craft_name"] == name and s > 0]
+                kept = sum(1 for _, i in owned if i in picked_idx)
+                # 先补与问题意图同类的块，保证对比的是"工艺 vs 工艺"
+                for s, i in owned:
+                    if kept >= PER_CRAFT_MIN or not preferred:
+                        break
+                    if i in picked_idx:
+                        continue
+                    c = self.chunks[i]
+                    if not any((t is None or c["type"] == t) and (sec is None or c["section"] == sec) for t, sec in preferred):
+                        continue
+                    extra.append((s, i))
+                    picked_idx.add(i)
+                    kept += 1
+                # 仍不够再按分数补
+                for s, i in owned:
+                    if kept >= PER_CRAFT_MIN:
+                        break
+                    if i in picked_idx:
+                        continue
+                    extra.append((s, i))
+                    picked_idx.add(i)
+                    kept += 1
+            if extra:
+                picked = sorted(picked + extra, key=lambda x: -x[0])
+
         results = []
-        for score, idx in scored[:top_k]:
+        for score, idx in picked:
             c = self.chunks[idx]
             results.append({
                 "chunk": c,
