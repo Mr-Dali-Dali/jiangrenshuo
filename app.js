@@ -481,6 +481,57 @@ function renderAnswer(question) {
   else answer = { direct: '我暂时没找到能可靠回答这个问题的非遗资料。你可以告诉我在哪看到它，或描述一下它的样子和用途。', extra: '补充更多线索后，我会帮你从对应的传统技艺里继续找答案。', source: '当前问题未匹配到可靠资料' };
   return `<div class="message assistant"><span class="message-avatar">匠</span><div class="bubble-wrap"><small>传承人 · 直接回答</small><div class="bubble">${answer.direct}<br /><br />${answer.extra}</div><details class="sources"><summary>参考资料 · 1 条</summary><p>${answer.source}</p></details></div></div>`;
 }
+/* ---------- 问答：优先走后端 RAG，连不上再退回本地知识库 ---------- */
+let chatSessionId = '';
+try { chatSessionId = localStorage.getItem('artisan-chat-session') || ''; } catch (err) { chatSessionId = ''; }
+
+async function backendReady() {
+  const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  const timer = ctrl ? setTimeout(() => ctrl.abort(), 2500) : null;
+  try {
+    const res = await fetch(IDENTIFY_API + '/', { signal: ctrl ? ctrl.signal : undefined });
+    if (!res.ok) return false;
+    const data = await res.json().catch(() => null);
+    return !!(data && data.status === 'ok');
+  } catch (err) {
+    return false;
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
+async function askBackend(question) {
+  const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  const timer = ctrl ? setTimeout(() => ctrl.abort(), 20000) : null;
+  try {
+    if (!chatSessionId) {
+      chatSessionId = `s-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+      try { localStorage.setItem('artisan-chat-session', chatSessionId); } catch (err) { /* 存不了也不影响这一轮 */ }
+    }
+    const res = await fetch(IDENTIFY_API + '/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question, session_id: chatSessionId }),
+      signal: ctrl ? ctrl.signal : undefined
+    });
+    if (!res.ok) throw new Error(`问答服务 HTTP ${res.status}`);
+    const data = await res.json();
+    if (data && data.error) throw new Error(data.error);
+    if (!data || !String(data.answer || '').trim()) throw new Error('问答服务返回空答案');
+    return data;
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
+function renderBackendAnswer(data) {
+  const answer = String(data.answer || '').trim();
+  const sources = Array.isArray(data.sources) ? data.sources : [];
+  const paragraphs = answer.split(/\n+/).map(line => line.trim()).filter(Boolean).map(line => `<p>${escapeHTML(line)}</p>`).join('');
+  const sourceList = sources.slice(0, 4).map(source => `${source.craft_name || '非遗'}${source.section ? ` · ${source.section}` : ''}`).join('；') || '后端知识库（614 段）';
+  return `<div class="message assistant"><span class="message-avatar">匠</span><div class="bubble-wrap"><small>传承人 · 后端检索回答</small><div class="bubble">${paragraphs}</div><details class="sources"><summary>参考资料 · ${sources.length || 1} 条</summary><p>${escapeHTML(sourceList)}</p></details></div></div>`;
+}
+
 function setChatTopic(item) {
   $('#chatTopic').textContent = item ? `非遗 · ${item.short}` : '非遗 · 随便问';
 }
@@ -514,17 +565,32 @@ function sendQuestion(question) {
   messages.querySelector('.suggestions')?.remove();
   messages.insertAdjacentHTML('beforeend', `<div class="message user"><div class="bubble-wrap"><div class="bubble">${escapeHTML(clean)}</div></div></div><div class="typing message assistant"><span class="message-avatar">匠</span><div class="bubble-wrap"><small>${focus ? `${focus.short}的传承人正在想一想…` : '传承人正在想一想…'}</small></div></div>`);
   messages.scrollTop = messages.scrollHeight;
-  setTimeout(() => {
-    messages.querySelector('.typing')?.remove();
+  (async () => {
+    await new Promise(resolve => setTimeout(resolve, 650));
     const wantsList = !focus && /哪些|都有|多少项|列表|有哪/.test(clean) && /非遗|项目|手艺/.test(clean);
-    messages.insertAdjacentHTML('beforeend', wantsList ? renderKBList() : focus ? renderKBAnswer(focus, clean) : renderAnswer(clean));
+    let html = '';
+    if (!wantsList) {
+      try {
+        if (await backendReady()) {
+          const hint = messages.querySelector('.typing small');
+          if (hint) hint.textContent = '正在检索知识库…';
+          const data = await askBackend(clean);
+          html = renderBackendAnswer(data);
+        }
+      } catch (err) {
+        html = '';
+      }
+    }
+    messages.querySelector('.typing')?.remove();
+    if (!html) html = wantsList ? renderKBList() : focus ? renderKBAnswer(focus, clean) : renderAnswer(clean);
+    messages.insertAdjacentHTML('beforeend', html);
     const prompts = focus ? kbPrompts(focus, clean) : ['这 15 项国家级非遗都有哪些？', '非遗和普通老物件有什么区别？'];
     if (prompts.length) {
       messages.insertAdjacentHTML('beforeend', `<div class="suggestions"><span>接下来还可以问</span>${prompts.map(prompt => `<button class="suggestion">${prompt}</button>`).join('')}</div>`);
     }
     messages.scrollTop = messages.scrollHeight;
     addEntry('问了', focus ? craftKeyOf(focus) : '非遗', clean.length > 15 ? `${clean.slice(0, 15)}…` : clean, focus ? `和传承人聊${focus.short}` : '和传承人聊非遗');
-  }, 760);
+  })();
 }
 function escapeHTML(text) {
   return text.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
