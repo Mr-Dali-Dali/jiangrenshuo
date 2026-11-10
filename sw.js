@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jiangrenshuo-pwa-v11';
+const CACHE_NAME = 'jiangrenshuo-pwa-v12';
 const APP_FILES = [
   './',
   './index.html',

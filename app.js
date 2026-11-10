@@ -525,7 +525,7 @@ async function askBackend(question) {
 }
 
 function renderBackendAnswer(data) {
-  const answer = String(data.answer || '').trim();
+  const answer = String(data.answer || '').trim().replace(/\[\d{1,3}\]/g, '').replace(/[ \t]{2,}/g, ' ');
   const sources = Array.isArray(data.sources) ? data.sources : [];
   const paragraphs = answer.split(/\n+/).map(line => line.trim()).filter(Boolean).map(line => `<p>${escapeHTML(line)}</p>`).join('');
   const sourceList = sources.slice(0, 4).map(source => `${source.craft_name || '非遗'}${source.section ? ` · ${source.section}` : ''}`).join('；') || '后端知识库（614 段）';

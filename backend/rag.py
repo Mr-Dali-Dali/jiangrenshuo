@@ -19,7 +19,6 @@
       {answer, sources, retrieved}
 """
 import os
-import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -69,17 +68,15 @@ class RAGAnswerer:
         }
 
     def _extract_sources(self, answer, results):
-        """解析回答文本中的 [n] 引用编号，映射回知识块来源列表（去重、保持引用顺序）。"""
-        cited = set()
-        for m in re.finditer(r"\[(\d{1,2})\]", answer):
-            n = int(m.group(1))
-            if 1 <= n <= len(results):
-                cited.add(n)
-
+        """正文不再标注引用编号，sources 直接取排序最靠前的几条块，供前端折叠展示出处。"""
         sources = []
-        for n in sorted(cited):
-            r = results[n - 1]
+        seen = set()
+        for r in results:
             c = r["chunk"]
+            key = (c["craft_name"], c["section"], c["type"])
+            if key in seen:
+                continue
+            seen.add(key)
             sources.append({
                 "chunk_id": c["id"],
                 "craft_name": c["craft_name"],
@@ -87,4 +84,6 @@ class RAGAnswerer:
                 "section": c["section"],
                 "url": c["sources"][0] if c.get("sources") else None,
             })
+            if len(sources) >= 4:
+                break
         return sources
