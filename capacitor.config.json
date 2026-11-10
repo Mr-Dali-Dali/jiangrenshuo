@@ -1,0 +1,12 @@
+{
+  "appId": "com.mrdali.jiangrenshuo",
+  "appName": "匠人说",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": true,
+    "webContentsDebuggingEnabled": true
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

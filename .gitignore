@@ -15,3 +15,8 @@ backend/__pycache__/
 .idea/
 .DS_Store
 Thumbs.db
+
+# 应用打包产物
+node_modules/
+www/
+android/

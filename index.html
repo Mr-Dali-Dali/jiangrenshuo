@@ -13,7 +13,7 @@
   <link rel="icon" href="./icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./icon.svg" />
   <title>匠人说 · 非遗生活</title>
-  <link rel="stylesheet" href="./styles.css?v=20261110h" />
+  <link rel="stylesheet" href="./styles.css?v=20261110i" />
 </head>
 <body>
   <div class="app-shell">
@@ -104,6 +104,11 @@
         <div class="journal-feed-head"><div><span class="eyebrow">YOUR FOOTPRINTS</span><h2>一路走来的手艺</h2></div></div>
         <div class="filter-tabs" id="journalFilters"><button class="selected" data-filter="全部">全部</button><button data-filter="看了">看过</button><button data-filter="问了">问过</button><button data-filter="做了">做过</button></div>
         <div class="timeline" id="timeline"></div>
+        <div class="service-card">
+          <div class="service-head"><div><span class="eyebrow">AI SERVICE</span><h2>后端服务地址</h2></div><small id="serviceState">未设置 · 使用内置知识库</small></div>
+          <p class="service-tip">填电脑隧道地址后，拍照识别与问答走阿里百炼后端；不填或填错时自动用手机内置知识库。</p>
+          <div class="service-row"><input id="serviceInput" type="url" placeholder="https://xxxx.trycloudflare.com" autocomplete="off" spellcheck="false" /><button id="serviceSave">保存</button><button id="serviceClear" class="ghost">恢复默认</button></div>
+        </div>
         <button class="explore-cta" data-go="identify"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span><strong>去解锁下一件手艺</strong><small>把下一个好奇，变成新的足迹</small></span><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></b></button>
       </section>
     </main>
@@ -119,6 +124,6 @@
     <div class="modal-backdrop hidden" id="modal"><div class="modal-card" id="modalContent"></div></div>
   </div>
   <script src="./heritage-knowledge-15.js?v=20261110d"></script>
-  <script src="./app.js?v=20261110l"></script>
+  <script src="./app.js?v=20261110m"></script>
 </body>
 </html>

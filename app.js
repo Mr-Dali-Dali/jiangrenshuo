@@ -820,3 +820,49 @@ $('#modal').addEventListener('click', event => {
   }
 });
 renderJournal();
+
+/* ---------- 后端服务地址设置：App 内可改，网页同样生效 ---------- */
+(function bindServiceSetting() {
+  const input = document.getElementById('serviceInput');
+  const state = document.getElementById('serviceState');
+  const saveBtn = document.getElementById('serviceSave');
+  const clearBtn = document.getElementById('serviceClear');
+  if (!input || !saveBtn || !state) return;
+
+  const current = () => {
+    try { return localStorage.getItem('artisan-api-base') || ''; } catch (err) { return ''; }
+  };
+  input.value = current();
+
+  const showState = () => {
+    const now = IDENTIFY_API || '';
+    if (!now || /127\.0\.0\.1|localhost/.test(now)) {
+      state.textContent = '未设置 · 使用内置知识库';
+    } else {
+      state.textContent = '已设置 · ' + now.replace(/^https?:\/\//, '').replace(/\/+$/, '').slice(0, 28);
+    }
+  };
+  showState();
+
+  const normalize = raw => {
+    const text = String(raw || '').trim();
+    if (!text) return '';
+    return (/^https?:\/\//i.test(text) ? text : 'https://' + text).replace(/\/+$/, '');
+  };
+
+  saveBtn.addEventListener('click', () => {
+    const url = normalize(input.value);
+    if (!url) { toast('请先填写服务地址'); return; }
+    try { localStorage.setItem('artisan-api-base', url); } catch (err) { toast('当前环境无法保存设置'); return; }
+    state.textContent = '已设置 · 正在重新载入';
+    toast('已保存，正在重新载入应用');
+    setTimeout(() => location.reload(), 900);
+  });
+
+  clearBtn.addEventListener('click', () => {
+    try { localStorage.removeItem('artisan-api-base'); } catch (err) { /* 清不掉就保持原样 */ }
+    input.value = '';
+    toast('已恢复默认，正在重新载入应用');
+    setTimeout(() => location.reload(), 900);
+  });
+})();

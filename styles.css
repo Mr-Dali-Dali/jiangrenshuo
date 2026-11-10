@@ -338,3 +338,15 @@ main{padding:0 18px 4px}
   letter-spacing:.02em;
 }
 .badge-item.locked small{color:#a8b4bc}
+
+/* ---- 后端服务地址设置 ---- */
+.service-card{margin:20px 0 8px;padding:14px;border:1px solid #e2edf4;border-radius:14px;background:linear-gradient(150deg,#f2f9ff,#ffffff);box-shadow:0 4px 16px #1a41490a}
+.service-head{display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
+.service-head h2{font-family:var(--serif);font-size:15px;margin:5px 0 0;color:#183655}
+.service-head small{font-size:9px;color:#7e929c;text-align:right;max-width:46%}
+.service-tip{font-size:9px;line-height:1.7;color:#8798a0;margin:9px 0 10px}
+.service-row{display:flex;gap:6px;align-items:center}
+.service-row input{flex:1;min-width:0;height:34px;border:1px solid #dbe8f0;border-radius:9px;padding:0 10px;font-size:10px;color:#23485c;background:#fff;font-family:inherit;outline:0}
+.service-row input:focus{border-color:#8fc0d8}
+.service-row button{height:34px;padding:0 12px;border:0;border-radius:9px;background:#348bd7;color:#fff;font-size:10px;font-family:var(--serif)}
+.service-row .ghost{background:#eef4f8;color:#5b7b8c;font-family:inherit}

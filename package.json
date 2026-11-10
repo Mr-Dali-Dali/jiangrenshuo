@@ -1,0 +1,17 @@
+{
+  "name": "jiangrenshuo-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "匠人说 · 非遗生活 App 打包工程",
+  "scripts": {
+    "build:web": "node tools/build-web.mjs",
+    "patch:android": "node tools/patch-android.mjs",
+    "cap:add": "npx cap add android",
+    "cap:sync": "npx cap sync android"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/core": "^6.2.0"
+  }
+}
